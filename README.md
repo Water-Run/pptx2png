@@ -1,6 +1,12 @@
-# pptx2img  
+# pptx2img
 
-## 中文  
+---
+
+![logo](./logo.png)    
+
+---
+
+## 中文
 
 就和名称一样: 将`.pptx`一键式的打包为`.png`图片.  
 提供一个Windows桌面端`.exe`应用和一个可调用的Python库.  
@@ -10,7 +16,7 @@
 
 开源于[GitHub](https://github.com/Water-Run/pptx2img), 遵循`GPL`协议.  
 
-## English  
+## English
 
 As the name suggests: easily convert `.pptx` files into `.png` images with a single click.  
 It provides both a Windows desktop `.exe` application and a Python library that can be integrated into your own projects.
@@ -23,4 +29,3 @@ Open-sourced on [GitHub](https://github.com/Water-Run/pptx2img) under the `GPL` 
 ---
 
 ![sample](./sample.png)  
-![logo](./logo.png)  
