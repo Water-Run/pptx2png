@@ -21,28 +21,6 @@ from PyQt6.QtWidgets import (
 from PyQt6.QtCore import Qt, QThread, pyqtSignal, QUrl
 from PyQt6.QtGui import QPixmap, QFont, QIcon, QColor, QDesktopServices, QPainter, QPainterPath
 
-# ============ 添加资源路径处理函数 ============
-def get_resource_path(relative_path):
-    """获取资源文件的绝对路径，兼容打包后的环境
-    
-    Args:
-        relative_path: 相对路径，如 'logo.png'
-    
-    Returns:
-        资源文件的绝对路径
-    """
-    try:
-        # PyInstaller 打包后，资源文件在临时文件夹 _MEIPASS 中
-        base_path = sys._MEIPASS
-    except AttributeError:
-        # 开发环境，使用脚本所在目录的上级目录
-        base_path = os.path.dirname(os.path.abspath(__file__))
-        # 如果是在子目录中运行，需要回到上级目录找 logo.png
-        if not os.path.exists(os.path.join(base_path, relative_path)):
-            base_path = os.path.dirname(base_path)
-    
-    return os.path.join(base_path, relative_path)
-
 # --- 多语言配置 ---
 LANG_TEXTS = {
     'zh': {
@@ -543,7 +521,7 @@ class Sidebar(QWidget):
         self.layout.setContentsMargins(20, 30, 20, 30)
         self.layout.setSpacing(10)
         
-        # Logo - 修改这里使用新的加载方法
+        # Logo
         self.lbl_logo = QLabel()
         self.lbl_logo.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.lbl_logo.setStyleSheet("background: transparent;")
@@ -666,20 +644,12 @@ class Sidebar(QWidget):
         self.setLayout(self.layout)
 
     def load_logo(self):
-        """使用新的资源路径函数加载 logo"""
-        try:
-            logo_path = get_resource_path('logo.png')
-            if os.path.exists(logo_path):
-                logo_pix = QPixmap(logo_path)
-                self.lbl_logo.setPixmap(logo_pix.scaled(80, 80, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation))
-            else:
-                # 如果找不到 logo，显示文字作为备用
-                self.lbl_logo.setText("📄")
-                self.lbl_logo.setStyleSheet("font-size: 60px; background: transparent;")
-        except Exception as e:
-            print(f"加载 Logo 失败: {e}")
-            self.lbl_logo.setText("📄")
-            self.lbl_logo.setStyleSheet("font-size: 60px; background: transparent;")
+        logo_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'logo.png')
+        if os.path.exists(logo_path):
+            logo_pix = QPixmap(logo_path)
+            self.lbl_logo.setPixmap(logo_pix.scaled(80, 80, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation))
+        else:
+            self.lbl_logo.setText("Logo")
 
     def on_language_changed(self):
         self.parent.update_language()
@@ -1054,8 +1024,7 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     app.setStyleSheet(GLOBAL_STYLESHEET)
     
-    # 修改这里使用新的资源路径函数
-    icon_path = get_resource_path('logo.png')
+    icon_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'logo.png')
     if os.path.exists(icon_path):
         app.setWindowIcon(QIcon(icon_path))
 
