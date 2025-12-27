@@ -84,27 +84,36 @@ def topng(pptx, output_dir="./output", slide_range=None, scale=None):
         target_w = 0
         target_h = 0
 
-        # Logic: If scale is not provided, use screen resolution (Long Edge)
+        # Logic: If scale is not provided, use screen resolution (Long Edge) with a boost
         if not scale:
             try:
                 user32 = ctypes.windll.user32
                 screen_w = user32.GetSystemMetrics(0)
                 screen_h = user32.GetSystemMetrics(1)
-                
-                # Find the long edge of the screen
+
+                # Long edge of the screen
                 screen_long = max(screen_w, screen_h)
-                
+
+                boost = float(os.getenv("PPTX2IMG_SCREEN_SCALE", 2))
+                if boost <= 0:
+                    boost = 2
+
+                target_long = int(screen_long * boost)
+
                 # Calculate aspect ratio of the slide
                 slide_ratio = slide_width / slide_height
 
-                if slide_ratio >= 1: # Landscape Slide
-                    target_w = screen_long
-                    target_h = int(screen_long / slide_ratio)
-                else: # Portrait Slide
-                    target_h = screen_long
-                    target_w = int(screen_long * slide_ratio)
-                
-                print("Mode: Auto-Resolution (Matched to Screen Long Edge: %d px)" % screen_long)
+                if slide_ratio >= 1:  # Landscape Slide
+                    target_w = target_long
+                    target_h = int(target_long / slide_ratio)
+                else:  # Portrait Slide
+                    target_h = target_long
+                    target_w = int(target_long * slide_ratio)
+
+                print(
+                    f"Mode: Auto-Resolution (Screen long edge {screen_long}px, "
+                    f"boost {boost}x -> target long {target_long}px)"
+                )
             except Exception:
                 # Fallback if ctypes fails
                 target_w = int(slide_width * 2)
