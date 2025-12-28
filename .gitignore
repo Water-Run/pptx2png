@@ -146,3 +146,7 @@ datasets/
 *.sqlite3
 *.db
 *.db3
+
+
+*.exe
+version_info.txt
