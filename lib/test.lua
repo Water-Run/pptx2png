@@ -1,6 +1,6 @@
 -- test.lua
 -- Author: Gemini
--- Description: A safe and comprehensive test suite for pptx2img.
+-- Description: A safe and comprehensive test suite for pptx2png.
 --              Features 15+ test cases and STRICT safety checks to protect source code.
 
 print("------------------------------------------------------------")

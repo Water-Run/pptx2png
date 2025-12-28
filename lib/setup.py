@@ -1,4 +1,4 @@
-# setup.py of pptx2img
+# setup.py of pptx2png
 
 import os
 from setuptools import setup, find_packages
@@ -10,14 +10,14 @@ if os.path.exists("README.md"):
         long_desc = f.read()
 
 setup(
-    name="pptx2img",
+    name="pptx2png",
     version="2025.1",
     author="WaterRun",
     author_email="2263633954@qq.com",
     description="A one-click Python library for converting .pptx files into .png images.",
     long_description=long_desc,
     long_description_content_type="text/markdown",
-    url="https://github.com/Water-Run/pptx2img",
+    url="https://github.com/Water-Run/pptx2png",
     packages=find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",

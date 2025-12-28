@@ -1,5 +1,5 @@
 """
-pptx2img 打包脚本
+pptx2png 打包脚本
 使用 PyInstaller 将程序打包为单个 .exe 文件
 """
 
@@ -10,7 +10,7 @@ import shutil
 from pathlib import Path
 
 # 配置
-APP_NAME = "pptx2img"
+APP_NAME = "pptx2png"
 VERSION = "2025.1"
 AUTHOR = "WaterRun"
 DESCRIPTION = "PowerPoint to PNG Converter"
@@ -19,7 +19,7 @@ DESCRIPTION = "PowerPoint to PNG Converter"
 SCRIPT_DIR = Path(__file__).parent.absolute()
 ROOT_DIR = SCRIPT_DIR.parent
 LOGO_PATH = ROOT_DIR / "logo.png"
-MAIN_SCRIPT = SCRIPT_DIR / "pptx2img-exe.py"
+MAIN_SCRIPT = SCRIPT_DIR / "pptx2png-exe.py"
 OUTPUT_DIR = SCRIPT_DIR / "dist"
 BUILD_DIR = SCRIPT_DIR / "build"
 SPEC_FILE = SCRIPT_DIR / f"{APP_NAME}.spec"
@@ -28,7 +28,7 @@ def print_banner():
     """打印横幅"""
     banner = f"""
 ╔════════════════════════════════════════════════════════════╗
-║                    pptx2img 打包工具                       ║
+║                    pptx2png 打包工具                       ║
 ║                      Version {VERSION}                         ║
 ║                    by {AUTHOR}                           ║
 ╚════════════════════════════════════════════════════════════╝

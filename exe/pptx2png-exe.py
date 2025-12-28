@@ -1,7 +1,7 @@
 r"""
 PPT转图片工具的图形界面程序
 
-:file: pptx2img-exe.py
+:file: pptx2png-exe.py
 :author: WaterRun
 :time: 2025-12-28
 """
@@ -16,10 +16,10 @@ import pythoncom
 import win32com.client
 
 try:
-    import pptx2img
+    import pptx2png
 except ImportError:
-    print("Error: pptx2img module missing.")
-    pptx2img = None
+    print("Error: pptx2png module missing.")
+    pptx2png = None
 
 from PyQt6.QtWidgets import (
     QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
@@ -35,7 +35,7 @@ from PyQt6.QtGui import QPixmap, QIcon, QColor, QDesktopServices, QPainter, QPai
 
 LANG_TEXTS: dict[str, dict[str, str]] = {
     'zh': {
-        'title': 'pptx2img',
+        'title': 'pptx2png',
         'by_author': 'by WaterRun',
         'file_info': '文件信息',
         'no_file': '未选择文件',
@@ -72,7 +72,7 @@ LANG_TEXTS: dict[str, dict[str, str]] = {
         'lang_en': 'English'
     },
     'en': {
-        'title': 'pptx2img',
+        'title': 'pptx2png',
         'by_author': 'by WaterRun',
         'file_info': 'File Info',
         'no_file': 'No file selected',
@@ -580,7 +580,7 @@ class LoadThread(QThread):
                 WithWindow=False
             )
             
-            temp_dir = tempfile.mkdtemp(prefix="pptx2img_prev_")
+            temp_dir = tempfile.mkdtemp(prefix="pptx2png_prev_")
             slides_info: list[dict[str, Any]] = []
             
             w: float = pres.PageSetup.SlideWidth
@@ -662,8 +662,8 @@ class ExportThread(QThread):
         """
         pythoncom.CoInitialize()
         try:
-            if not pptx2img:
-                raise ImportError("pptx2img library not found!")
+            if not pptx2png:
+                raise ImportError("pptx2png library not found!")
 
             total: int = len(self.indices)
             count: int = 0
@@ -672,7 +672,7 @@ class ExportThread(QThread):
             lib_scale: int | None = self.scale if self.scale > 0 else None
             
             for slide_range in ranges:
-                pptx2img.topng(
+                pptx2png.topng(
                     pptx=self.ppt_path,
                     output_dir=self.out_dir,
                     slide_range=slide_range,
@@ -727,7 +727,7 @@ class TitleBar(QWidget):
         
         layout.addStretch(1)
         
-        self.lbl_title: QLabel = QLabel("pptx2img")
+        self.lbl_title: QLabel = QLabel("pptx2png")
         self.lbl_title.setAlignment(Qt.AlignmentFlag.AlignCenter)
         layout.addWidget(self.lbl_title)
         
@@ -901,7 +901,7 @@ class Sidebar(QWidget):
         self.layout.addWidget(self.lbl_author)
         
         self.lbl_github: QLabel = QLabel(
-            f'<a href="https://github.com/Water-Run/pptx2img" '
+            f'<a href="https://github.com/Water-Run/pptx2png" '
             f'style="color:{COLOR_PPT_ORANGE}; text-decoration:none; font-weight:bold;">GitHub</a>'
         )
         self.lbl_github.setAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -1509,7 +1509,7 @@ class MainWindow(QMainWindow):
             self.sidebar.lbl_filename.setText(os.path.basename(data['path']))
             default_out: str = os.path.join(
                 os.path.dirname(data['path']),
-                "pptx2img"
+                "pptx2png"
             )
             self.sidebar.entry_out_dir.setText(default_out)
             self.sidebar.entry_out_dir.setToolTip(default_out)

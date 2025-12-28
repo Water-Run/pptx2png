@@ -1,5 +1,5 @@
 """__init__.py"""
 
-from .pptx2img import topng, whatis
+from .pptx2png import topng, whatis
 
 __all__ = ['topng', 'whatis']
